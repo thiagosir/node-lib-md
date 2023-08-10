@@ -5,14 +5,11 @@ function trataErro(erro) {
     throw new Error(chalk.red(erro.code, 'Erro!'));
 }
 
-
 function catchFile (wayFile){
     const encoding = 'utf-8';
-    fs.readFile(wayFile, encoding, (erro, texto) => {
-        if (erro) {
-            trataErro(erro);
-        }
-        console.log(chalk.magenta.bold(texto));
-    })
+    fs.promises
+    .readFile(wayFile, encoding)
+    .then((texto) => console.log(chalk.magenta.bold(texto)))
+    .catch(trataErro)
 }
- catchFile('./arquivos/texto.md')
+ catchFile('./arquivos/texto.md');
